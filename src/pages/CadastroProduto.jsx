@@ -9,15 +9,15 @@ function CadastroProduto() {
     const [descricao, setDescricao] = useState("");
     const [categoria, setCategoria] = useState("");
     const [ano, setAno] = useState("");
-    const [duracao, setDuracao] = useState("");
+    const [autor, setAutor] = useState("");
     const [imagem, setImagem] = useState("");
     const [erro, setErro] = useState(false);
     const [cadastro, setcadastro] = useState(false);
-    const [usuario, setUsuario] = useState(localStorage.getItem("usuario") || false);
     const { id } = useParams();
 
     function Cadastrar(evento) {
         evento.preventDefault();
+        const usuario = localStorage.getItem( "usuario" );
         if (usuario) {
             fetch(process.env.REACT_APP_BACKEND + "produtos", {
                 method: (id ? "PUT" : "POST" ),
@@ -31,7 +31,7 @@ function CadastroProduto() {
                         descricao: descricao,
                         categoria: categoria,
                         ano: ano,
-                        duracao: duracao,
+                        duracao: autor,
                         imagem: imagem,
                         usuario: usuario
                     }
@@ -58,13 +58,14 @@ function CadastroProduto() {
         setDescricao( "" );
         setCategoria( "" );
         setAno( "" );
-        setDuracao( "" );
+        setAutor( "" );
         setImagem("" );
     }, [cadastro] );
 
     useEffect( () => {
 
         if( id ) {
+            const usuario = localStorage.getItem( "usuario" )
             fetch(process.env.REACT_APP_BACKEND + "produtos/" + usuario + "/" + id, {
                 method: "GET",
                 headers: {
@@ -78,7 +79,7 @@ function CadastroProduto() {
                     setDescricao( json.descricao );
                     setAno( json.ano );
                     setCategoria( json.categoria );
-                    setDuracao( json.duracao );
+                    setAutor( json.duracao );
                     setImagem( json.imagem );
                 } else {
                     setcadastro( false );
@@ -151,8 +152,8 @@ function CadastroProduto() {
                         label="Duração"
                         variant="filled"
                         margin="normal"
-                        value={duracao}
-                        onChange={(e) => setDuracao(e.target.value)}
+                        value={autor}
+                        onChange={(e) => setAutor(e.target.value)}
                         fullWidth
                         required
                     />
