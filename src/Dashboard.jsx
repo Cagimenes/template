@@ -18,7 +18,6 @@ function Dashboard() {
   return (
     <>
         <Header />
-        <br />
         <Outlet />
     </>
   )
